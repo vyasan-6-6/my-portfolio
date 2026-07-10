@@ -36,33 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Show More Projects toggle logic
-    const showMoreProjectsBtn = document.getElementById('showMoreProjectsBtn');
-    const extraProjects = document.querySelectorAll('.project-card.hidden-project');
-
-    if (showMoreProjectsBtn && extraProjects.length > 0) {
-        showMoreProjectsBtn.addEventListener('click', () => {
-            const isHidden = extraProjects[0].classList.contains('hidden-project');
-            
-            extraProjects.forEach(project => {
-                if (isHidden) {
-                    project.classList.remove('hidden-project');
-                    project.classList.add('animate-fade');
-                } else {
-                    project.classList.add('hidden-project');
-                    project.classList.remove('animate-fade');
-                }
-            });
-
-            if (isHidden) {
-                showMoreProjectsBtn.textContent = 'Show Less Projects';
-            } else {
-                showMoreProjectsBtn.textContent = 'Show More Projects';
-            }
-        });
-    }
-
-    // 4. Contact Form Submission & Client-Side Validation
+    // 3. Contact Form Submission & Client-Side Validation
     const contactForm = document.getElementById('contactForm');
     const formStatus = document.getElementById('formStatus');
 
