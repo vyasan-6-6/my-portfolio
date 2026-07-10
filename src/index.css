@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* Design System Font Bindings */
+@layer base {
+    html {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        scroll-behavior: smooth;
+        background-color: #020617; /* Slate-950 */
+        color: #f1f5f9; /* Slate-100 */
+        overflow-x: hidden;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Space Grotesk', 'Outfit', sans-serif;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #020617; /* Slate-950 */
+}
+::-webkit-scrollbar-thumb {
+    background: #1e293b; /* Slate-800 */
+    border-radius: 4px;
+    border: 2px solid #020617;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #6366f1; /* Indigo-500 */
+}
+
+/* Glassmorphism Panel Preset */
+.glass-card {
+    background: rgba(15, 23, 42, 0.45); /* Slate-900 / 45% */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.glass-card-hover {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-card-hover:hover {
+    transform: translateY(-6px);
+    border-color: rgba(99, 102, 241, 0.35); /* Glowing Indigo border */
+    box-shadow: 0 20px 40px -15px rgba(99, 102, 241, 0.15), 0 0 25px rgba(99, 102, 241, 0.05);
+}
+
+/* Skills Scrolling Marquee */
+.skills-marquee-section {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.skills-marquee-container {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    width: 100%;
+}
+
+.skills-marquee-inner {
+    display: flex;
+    gap: 2rem;
+    padding-right: 2rem;
+    flex-shrink: 0;
+    min-width: 100%;
+    justify-content: space-around;
+    animation: scroll-marquee 25s linear infinite;
+}
+
+@keyframes scroll-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.skills-marquee-inner:hover {
+    animation-play-state: paused;
+}
+
+/* Custom fade-in and scaling keyframes */
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fade-in 0.4s ease-out forwards;
+}
+
+/* Timeline Custom styles */
+.timeline-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    height: 100%;
+    width: 2px;
+    background: linear-gradient(180deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%);
+    opacity: 0.2;
+}
+
+@media (min-width: 768px) {
+    .timeline-line::before {
+        left: 50%;
+        margin-left: -1px;
+    }
+}
