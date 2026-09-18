@@ -50,6 +50,8 @@ export default function Footer() {
                     <a href="#skills" className="text-xs font-semibold text-slate-400 hover:text-indigo-400 transition-colors">Skills</a>
                     <a href="#services" className="text-xs font-semibold text-slate-400 hover:text-indigo-400 transition-colors">Services</a>
                     <a href="#projects" className="text-xs font-semibold text-slate-400 hover:text-indigo-400 transition-colors">Projects</a>
+                    <a href="#code" className="text-xs font-semibold text-slate-400 hover:text-indigo-400 transition-colors">Code</a>
+                    <a href="#terminal" className="text-xs font-semibold text-slate-400 hover:text-indigo-400 transition-colors">CLI Shell</a>
                     <a href="#experience" className="text-xs font-semibold text-slate-400 hover:text-indigo-400 transition-colors">Timeline</a>
                 </div>
 
