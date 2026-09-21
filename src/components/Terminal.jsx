@@ -4,23 +4,16 @@ import confetti from 'canvas-confetti';
 import { portfolioData } from '../data/portfolio';
 import { FaTerminal, FaTimes, FaExpandAlt, FaCompressAlt, FaPlay, FaChevronRight, FaRegCopy, FaCheck } from 'react-icons/fa';
 
-interface CommandOutput {
-    id: string;
-    command: string;
-    output: React.ReactNode;
-    isError?: boolean;
-}
-
 export default function Terminal() {
     const [isOpen, setIsOpen] = useState(false);
     const [isExpanded, setIsExpanded] = useState(false);
     const [isMatrixMode, setIsMatrixMode] = useState(false);
     const [input, setInput] = useState('');
-    const [history, setHistory] = useState<string[]>([]);
+    const [history, setHistory] = useState([]);
     const [historyIndex, setHistoryIndex] = useState(-1);
     const [copied, setCopied] = useState(false);
 
-    const [logs, setLogs] = useState<CommandOutput[]>([
+    const [logs, setLogs] = useState([
         {
             id: 'init-1',
             command: 'system.init()',
@@ -34,8 +27,8 @@ export default function Terminal() {
         }
     ]);
 
-    const inputRef = useRef<HTMLInputElement>(null);
-    const logEndRef = useRef<HTMLDivElement>(null);
+    const inputRef = useRef(null);
+    const logEndRef = useRef(null);
 
     // Auto scroll terminal output
     useEffect(() => {
@@ -49,7 +42,7 @@ export default function Terminal() {
         }
     }, [isOpen]);
 
-    const executeCommand = (cmdStr: string) => {
+    const executeCommand = (cmdStr) => {
         const trimmed = cmdStr.trim();
         if (!trimmed) return;
 
@@ -58,7 +51,7 @@ export default function Terminal() {
         setHistoryIndex(-1);
 
         const lower = trimmed.toLowerCase();
-        let resultOutput: React.ReactNode = null;
+        let resultOutput = null;
         let isErr = false;
 
         switch (lower) {
@@ -198,7 +191,7 @@ export default function Terminal() {
         setInput('');
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             executeCommand(input);
         } else if (e.key === 'ArrowUp') {

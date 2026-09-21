@@ -61,6 +61,16 @@ export default function Experience() {
                                     <p className="text-slate-400 text-sm mt-4 leading-relaxed font-light">
                                         {exp.desc}
                                     </p>
+
+                                    {exp.tech && exp.tech.length > 0 && (
+                                        <div className="flex flex-wrap gap-1.5 mt-4">
+                                            {exp.tech.map((t, idx) => (
+                                                <span key={idx} className="text-[10px] font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 px-2 py-0.5 rounded">
+                                                    {t}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </motion.div>
                         </div>

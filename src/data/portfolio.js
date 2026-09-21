@@ -162,8 +162,17 @@ export const portfolioData = {
             role: "Software Developer",
             company: "InnoTech Solutions",
             type: "Full-Time",
-            duration: "2024 - PRESENT",
-            desc: "Responsible for developing high-performance RESTful APIs and modern frontend interfaces using React.js. Led migration of legacy applications to dynamic component-based structures, increasing developer velocity by 25%."
+            duration: "2025 - PRESENT",
+            desc: "Responsible for developing high-performance RESTful APIs and modern frontend interfaces using React.js. Led migration of legacy applications to dynamic component-based structures, increasing developer velocity by 25%.",
+            tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Tailwind CSS"]
+        },
+        {
+            role: "Full Stack Developer Intern",
+            company: "WebCraft Systems",
+            type: "Internship",
+            duration: "2024 - 2025",
+            desc: "Built scalable web components, integrated third-party RESTful APIs, optimized database queries, and implemented responsive UI designs across client projects.",
+            tech: ["JavaScript", "React", "Node.js", "REST APIs", "PostgreSQL"]
         }
     ],
     education: [
