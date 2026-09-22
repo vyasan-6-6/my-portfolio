@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '../data/portfolio';
 
 // Count-up counter helper component
@@ -25,6 +25,7 @@ function Counter({ value, duration = 1.5, suffix = "" }) {
 export default function About() {
     const { bio, avatar } = portfolioData.personal;
     const stats = portfolioData.stats;
+    const [activeTab, setActiveTab] = useState('overview');
 
     // Highlights bullets for recruiters
     const highlights = [
@@ -32,6 +33,20 @@ export default function About() {
         "Experienced in RESTful API development and databases.",
         "Strong focus on responsive design, performance, and SEO.",
         "Committed to writing clean, modular, and maintainable codebases."
+    ];
+
+    const architecturePoints = [
+        "Component-driven modular React architecture with custom hooks.",
+        "Secure REST API endpoints with JWT authentication & RBAC authorization.",
+        "Database query optimization with MongoDB indexing & Redis caching.",
+        "Asynchronous event handling with WebSockets and Socket.io."
+    ];
+
+    const valuesPoints = [
+        "Clean, self-documenting code with predictable state flow.",
+        "Agile Git workflows with feature branching and code reviews.",
+        "User-first accessibility, fast page loads & SEO best practices.",
+        "Relentless curiosity and passion for learning modern tech stacks."
     ];
 
     return (
@@ -49,7 +64,7 @@ export default function About() {
                 {/* About Content Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
                     
-                    {/* Portrait Photo (with 3D-Tilt Style Float border) */}
+                    {/* Portrait Photo */}
                     <div className="relative justify-self-center md:justify-self-start">
                         <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden border-2 border-indigo-500/20 shadow-2xl z-10 group hover:border-indigo-500/55 transition-colors duration-500">
                             <img 
@@ -64,26 +79,124 @@ export default function About() {
                         <div className="absolute -inset-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur-xl opacity-15 z-0" />
                     </div>
 
-                    {/* Objective & Highlights */}
+                    {/* Interactive Tabbed Content */}
                     <div className="flex flex-col gap-6 text-slate-300">
-                        <p className="text-base md:text-lg leading-relaxed font-light">
-                            {bio}
-                        </p>
-                        
-                        <div className="h-[1px] bg-slate-900 w-full" />
-                        
-                        <h4 className="font-heading text-lg font-bold text-white tracking-wide">
-                            Core Capabilities & Focus:
-                        </h4>
-                        
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {highlights.map((item, i) => (
-                                <li key={i} className="flex gap-2 text-sm text-slate-400 items-start">
-                                    <span className="text-indigo-400 font-bold mt-0.5">&bull;</span>
-                                    <span>{item}</span>
-                                </li>
-                            ))}
-                        </ul>
+                        {/* Tab Pill Buttons */}
+                        <div className="flex items-center gap-2 p-1 bg-slate-900 border border-white/5 rounded-xl self-start text-xs font-semibold">
+                            <button
+                                onClick={() => setActiveTab('overview')}
+                                className={`px-4 py-2 rounded-lg transition-all cursor-pointer ${
+                                    activeTab === 'overview'
+                                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                                        : 'text-slate-400 hover:text-white'
+                                }`}
+                            >
+                                Overview
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('architecture')}
+                                className={`px-4 py-2 rounded-lg transition-all cursor-pointer ${
+                                    activeTab === 'architecture'
+                                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                                        : 'text-slate-400 hover:text-white'
+                                }`}
+                            >
+                                Architecture
+                            </button>
+                            <button
+                                onClick={() => setActiveTab('values')}
+                                className={`px-4 py-2 rounded-lg transition-all cursor-pointer ${
+                                    activeTab === 'values'
+                                        ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
+                                        : 'text-slate-400 hover:text-white'
+                                }`}
+                            >
+                                Engineering Values
+                            </button>
+                        </div>
+
+                        <AnimatePresence mode="wait">
+                            {activeTab === 'overview' && (
+                                <motion.div
+                                    key="overview"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="space-y-4"
+                                >
+                                    <p className="text-base md:text-lg leading-relaxed font-light">
+                                        {bio}
+                                    </p>
+                                    <div className="h-[1px] bg-slate-900 w-full my-4" />
+                                    <h4 className="font-heading text-sm font-bold text-indigo-400 tracking-wide uppercase">
+                                        Core Capabilities & Focus:
+                                    </h4>
+                                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        {highlights.map((item, i) => (
+                                            <li key={i} className="flex gap-2 text-sm text-slate-400 items-start">
+                                                <span className="text-indigo-400 font-bold mt-0.5">&bull;</span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </motion.div>
+                            )}
+
+                            {activeTab === 'architecture' && (
+                                <motion.div
+                                    key="architecture"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="space-y-4"
+                                >
+                                    <p className="text-sm leading-relaxed text-slate-300">
+                                        Building scalable web applications demands solid architectural foundations, modular separation of concerns, and clean data contracts between frontend and backend layers.
+                                    </p>
+                                    <div className="h-[1px] bg-slate-900 w-full my-4" />
+                                    <h4 className="font-heading text-sm font-bold text-purple-400 tracking-wide uppercase">
+                                        Architectural Highlights:
+                                    </h4>
+                                    <ul className="grid grid-cols-1 gap-3">
+                                        {architecturePoints.map((item, i) => (
+                                            <li key={i} className="flex gap-2.5 text-sm text-slate-400 items-start bg-slate-900/40 border border-white/5 p-3 rounded-lg">
+                                                <span className="text-purple-400 font-bold">⚡</span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </motion.div>
+                            )}
+
+                            {activeTab === 'values' && (
+                                <motion.div
+                                    key="values"
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="space-y-4"
+                                >
+                                    <p className="text-sm leading-relaxed text-slate-300">
+                                        Software engineering is more than just writing syntax; it's about solving real-world problems efficiently while prioritizing code longevity, maintainability, and end-user delight.
+                                    </p>
+                                    <div className="h-[1px] bg-slate-900 w-full my-4" />
+                                    <h4 className="font-heading text-sm font-bold text-cyan-400 tracking-wide uppercase">
+                                        Development Principles:
+                                    </h4>
+                                    <ul className="grid grid-cols-1 gap-3">
+                                        {valuesPoints.map((item, i) => (
+                                            <li key={i} className="flex gap-2.5 text-sm text-slate-400 items-start bg-slate-900/40 border border-white/5 p-3 rounded-lg">
+                                                <span className="text-cyan-400 font-bold">✨</span>
+                                                <span>{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
                 </div>
 
