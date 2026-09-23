@@ -74,6 +74,18 @@ export default function Projects() {
                     </div>
                 </div>
 
+                {/* Filter Results Counter Bar */}
+                <div className="flex justify-between items-center mb-6 text-xs text-slate-400">
+                    <span>
+                        Showing <strong className="text-white">{visibleProjects.length}</strong> of <strong className="text-white">{filteredProjects.length}</strong> project{filteredProjects.length !== 1 ? 's' : ''}
+                    </span>
+                    {selectedCategory !== 'all' && (
+                        <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2.5 py-1 rounded-full text-[11px] font-medium uppercase tracking-wider">
+                            Filter: {selectedCategory}
+                        </span>
+                    )}
+                </div>
+
                 {/* Projects Cards Grid */}
                 <motion.div 
                     layout
