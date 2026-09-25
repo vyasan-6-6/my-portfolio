@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolio';
 import confetti from 'canvas-confetti';
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaPaperPlane } from 'react-icons/fa';
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaCopy, FaCheck } from 'react-icons/fa';
 
 export default function Contact() {
     const { email, phone, location, isAvailable } = portfolioData.personal;
@@ -10,6 +10,39 @@ export default function Contact() {
     // Form States
     const [formData, setFormData] = useState({ fullName: "", emailAddress: "", subject: "", message: "" });
     const [status, setStatus] = useState({ text: "", type: "" }); // Types: 'success', 'error', 'loading'
+    const [copiedEmail, setCopiedEmail] = useState(false);
+
+    const presetTemplates = [
+        {
+            label: "💼 Full-Time Role",
+            subject: "Full-Time Engineering Opportunity",
+            message: "Hi Vyasen,\n\nI was impressed by your portfolio and would love to discuss a full-time software engineering role at our company."
+        },
+        {
+            label: "🚀 Freelance Project",
+            subject: "Freelance Project Inquiry",
+            message: "Hi Vyasen,\n\nWe have an exciting project coming up and would love to collaborate with you to build out our web app."
+        },
+        {
+            label: "💬 Tech Chat",
+            subject: "General Tech & Coffee Chat",
+            message: "Hi Vyasen,\n\nI found your portfolio via GitHub and wanted to reach out to connect and discuss web dev tech stacks!"
+        }
+    ];
+
+    const applyPreset = (preset) => {
+        setFormData((prev) => ({
+            ...prev,
+            subject: preset.subject,
+            message: preset.message
+        }));
+    };
+
+    const handleCopyEmail = () => {
+        navigator.clipboard.writeText(email);
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2000);
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,7 +68,7 @@ export default function Contact() {
         setStatus({ text: "Sending your message...", type: "loading" });
 
         setTimeout(() => {
-            // Trigger Confetti Burst (Premium Detail)
+            // Trigger Confetti Burst
             confetti({
                 particleCount: 150,
                 spread: 80,
@@ -98,17 +131,27 @@ export default function Contact() {
                                 </div>
                             </div>
                             
-                            {/* Email */}
-                            <div className="flex items-center gap-4">
-                                <div className="p-3 bg-slate-900 border border-white/5 rounded-xl text-lg text-indigo-400">
-                                    <FaEnvelope />
+                            {/* Email with Copy Trigger */}
+                            <div className="flex items-center justify-between p-3 bg-slate-900/60 border border-white/5 rounded-2xl group">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-slate-900 border border-white/5 rounded-xl text-lg text-indigo-400">
+                                        <FaEnvelope />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Email Me</span>
+                                        <a href={`mailto:${email}`} className="text-sm font-semibold text-slate-200 hover:text-indigo-400 transition-colors">
+                                            {email}
+                                        </a>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col">
-                                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Email Me</span>
-                                    <a href={`mailto:${email}`} className="text-sm font-semibold text-slate-200 hover:text-indigo-400 transition-colors">
-                                        {email}
-                                    </a>
-                                </div>
+                                <button
+                                    onClick={handleCopyEmail}
+                                    className="p-2 text-slate-400 hover:text-indigo-400 hover:bg-slate-800 rounded-lg transition-all cursor-pointer"
+                                    title="Copy Email to Clipboard"
+                                    aria-label="Copy Email"
+                                >
+                                    {copiedEmail ? <FaCheck className="text-emerald-400" size={14} /> : <FaCopy size={14} />}
+                                </button>
                             </div>
 
                             {/* Location */}
@@ -129,6 +172,24 @@ export default function Contact() {
                     {/* Contact Form Column */}
                     <div className="lg:col-span-2">
                         <div className="glass-card p-8">
+                            
+                            {/* Quick Presets Selector Bar */}
+                            <div className="mb-6 flex flex-col gap-2">
+                                <span className="text-xs font-semibold text-slate-400">Quick Template Starters:</span>
+                                <div className="flex flex-wrap gap-2">
+                                    {presetTemplates.map((preset, i) => (
+                                        <button
+                                            key={i}
+                                            type="button"
+                                            onClick={() => applyPreset(preset)}
+                                            className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-indigo-600/20 border border-white/5 hover:border-indigo-500/30 text-xs text-slate-300 transition-all cursor-pointer"
+                                        >
+                                            {preset.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
                             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div className="flex flex-col gap-2">
