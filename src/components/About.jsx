@@ -2,21 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '../data/portfolio';
 
-// Count-up counter helper component
+// Count-up counter helper component with clean animation frame lifecycle management
 function Counter({ value, duration = 1.5, suffix = "" }) {
     const [count, setCount] = useState(0);
 
     useEffect(() => {
         let startTime = null;
+        let animationFrameId;
+
         const step = (timestamp) => {
             if (!startTime) startTime = timestamp;
             const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
-            setCount(Math.floor(progress * value));
             if (progress < 1) {
-                window.requestAnimationFrame(step);
+                setCount(Math.floor(progress * value));
+                animationFrameId = window.requestAnimationFrame(step);
+            } else {
+                setCount(value);
             }
         };
-        window.requestAnimationFrame(step);
+
+        animationFrameId = window.requestAnimationFrame(step);
+
+        return () => {
+            if (animationFrameId) {
+                window.cancelAnimationFrame(animationFrameId);
+            }
+        };
     }, [value, duration]);
 
     return <span>{count}{suffix}</span>;
