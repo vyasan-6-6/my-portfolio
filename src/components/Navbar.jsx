@@ -29,7 +29,6 @@ export default function Navbar() {
         { label: "Skills", href: "#skills" },
         { label: "Services", href: "#services" },
         { label: "Projects", href: "#projects" },
-        { label: "CLI Shell", href: "#terminal" },
         { label: "Timeline", href: "#experience" }
     ];
 
