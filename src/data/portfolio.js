@@ -10,7 +10,7 @@ export const portfolioData = {
         subtitle: "I build scalable, secure, and modern web applications with exceptional user experiences.",
         bio: "I am a passionate software developer focused on crafting beautiful, highly interactive user interfaces and robust backend APIs. I specialize in the MERN stack (MongoDB, Express, React, Node.js) and enjoy solving complex algorithmic challenges.",
         email: "vyasa.dev@email.com",
-        phone: "+91 98765 43210",
+        phone: "+91 8921216621",
         location: "Kerala, India",
         resumeUrl: "/resume.pdf", // Served from the public directory
         avatar: "/images/profile.png", // Served from the public directory
@@ -24,18 +24,8 @@ export const portfolioData = {
         },
         {
             name: "LinkedIn",
-            url: "https://linkedin.com/in/vyasan-6-6",
+            url: "https://www.linkedin.com/in/vyasanks",
             icon: "FaLinkedin"
-        },
-        {
-            name: "Twitter",
-            url: "https://twitter.com/vyasan",
-            icon: "FaTwitter"
-        },
-        {
-            name: "Instagram",
-            url: "https://instagram.com/vyasan",
-            icon: "FaInstagram"
         }
     ],
     stats: [
@@ -64,13 +54,13 @@ export const portfolioData = {
         
         // Database
         { name: "MongoDB", category: "database", icon: "SiMongodb" },
-        { name: "PostgreSQL", category: "database", icon: "SiPostgresql" },
+        // { name: "PostgreSQL", category: "database", icon: "SiPostgresql" },
         { name: "Redis", category: "database", icon: "SiRedis" },
         
         // Cloud & DevOps
         { name: "AWS EC2", category: "cloud", icon: "FaAws" },
         { name: "Nginx", category: "cloud", icon: "SiNginx" },
-        { name: "Docker", category: "cloud", icon: "SiDocker" },
+        // { name: "Docker", category: "cloud", icon: "SiDocker" },
         { name: "Git", category: "cloud", icon: "SiGit" }
     ],
     services: [
@@ -102,7 +92,7 @@ export const portfolioData = {
             desc: "A premium admin dashboard built to monitor e-commerce activity, offering charts, real-time analytics, inventory details, and automated summaries of store sales performance.",
             tech: ["React", "Chart.js", "Node.js", "MongoDB"],
             codeLink: "https://github.com/vyasan-6-6/shopease-dashboard",
-            demoLink: "https://shopease-dashboard.demo",
+            demoLink: "http://shopease-frontend-vyasan.s3-website-us-east-1.amazonaws.com/",
             image: "/images/projects/project1.png",
             metrics: {
                 users: "1.2k+",
@@ -198,136 +188,7 @@ export const portfolioData = {
             credentialLink: "https://aws.com",
             viewLink: "https://aws.com"
         }
-    ],
-    codeSnippets: [
-        {
-            id: "jwt-auth",
-            title: "JWT Authentication Middleware",
-            language: "javascript",
-            category: "Backend",
-            description: "Express.js middleware verifying JSON Web Tokens, extracting user claims, and enforcing role-based access control.",
-            filename: "authMiddleware.js",
-            code: `import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
-
-export const verifyToken = async (req, res, next) => {
-    try {
-        const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith('Bearer ')) {
-            return res.status(401).json({ success: false, message: 'Access denied. Token missing.' });
-        }
-
-        const token = authHeader.split(' ')[1];
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        
-        const user = await User.findById(decoded.id).select('-password');
-        if (!user) {
-            return res.status(401).json({ success: false, message: 'Invalid session payload.' });
-        }
-
-        req.user = user;
-        next();
-    } catch (error) {
-        return res.status(403).json({ success: false, message: 'Invalid or expired token.' });
-    }
-};`,
-            output: "HTTP/1.1 200 OK\nPayload: { userId: 'usr_98f4a', role: 'developer', status: 'authenticated' }"
-        },
-        {
-            id: "use-debounce",
-            title: "Custom React Search Debounce Hook",
-            language: "javascript",
-            category: "Frontend",
-            description: "A lightweight React custom hook that delays API requests until the user has stopped typing for a specified interval.",
-            filename: "useDebounce.js",
-            code: `import { useState, useEffect } from 'react';
-
-export function useDebounce(value, delay = 500) {
-    const [debouncedValue, setDebouncedValue] = useState(value);
-
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedValue(value);
-        }, delay);
-
-        return () => {
-            clearTimeout(handler);
-        };
-    }, [value, delay]);
-
-    return debouncedValue;
-}`,
-            output: "Query updated: 'Full Stack MERN' -> Triggering API search after 500ms delay..."
-        },
-        {
-            id: "socket-handler",
-            title: "Real-time Socket.io Broadcast Engine",
-            language: "javascript",
-            category: "Realtime",
-            description: "Node.js WebSocket handler managing room subscriptions, active user states, and instant message distribution.",
-            filename: "socketHandler.js",
-            code: `import { Server } from 'socket.io';
-
-export const initSocketServer = (server) => {
-    const io = new Server(server, { cors: { origin: '*' } });
-    const activeUsers = new Map();
-
-    io.on('connection', (socket) => {
-        socket.on('join_room', ({ roomId, userId }) => {
-            socket.join(roomId);
-            activeUsers.set(socket.id, { userId, roomId });
-            io.to(roomId).emit('user_joined', { userId, activeCount: activeUsers.size });
-        });
-
-        socket.on('send_message', (data) => {
-            io.to(data.roomId).emit('receive_message', { ...data, timestamp: new Date() });
-        });
-
-        socket.on('disconnect', () => {
-            const user = activeUsers.get(socket.id);
-            if (user) {
-                io.to(user.roomId).emit('user_left', { userId: user.userId });
-                activeUsers.delete(socket.id);
-            }
-        });
-    });
-};`,
-            output: "Connected sockets: 14 | Room: 'dev-lounge' | Packet latency: 12ms"
-        },
-        {
-            id: "mongo-pipeline",
-            title: "MongoDB Aggregation Pipeline",
-            language: "javascript",
-            category: "Database",
-            description: "Complex MongoDB aggregation calculating monthly analytics totals, average transaction values, and top revenue products.",
-            filename: "salesPipeline.js",
-            code: `import Order from '../models/Order.js';
-
-export const getMonthlySalesAnalytics = async (year) => {
-    return await Order.aggregate([
-        { $match: { status: 'completed', createdAt: { $gte: new Date(\`\${year}-01-01\`) } } },
-        {
-            $group: {
-                _id: { month: { $month: '$createdAt' } },
-                totalRevenue: { $sum: '$amount' },
-                orderCount: { $sum: 1 },
-                avgOrderValue: { $avg: '$amount' }
-            }
-        },
-        { $sort: { '_id.month': 1 } },
-        {
-            $project: {
-                month: '$_id.month',
-                totalRevenue: { $round: ['$totalRevenue', 2] },
-                orderCount: 1,
-                avgOrderValue: { $round: ['$avgOrderValue', 2] },
-                _id: 0
-            }
-        }
-    ]);
-};`,
-            output: "Pipeline Result: [ { month: 1, totalRevenue: 18450.50, orderCount: 142, avgOrderValue: 129.93 }, ... ]"
-        }
     ]
 };
+
 

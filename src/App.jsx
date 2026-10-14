@@ -5,7 +5,6 @@ import About from './components/About';
 import Skills from './components/Skills';
 import Services from './components/Services';
 import Projects from './components/Projects';
-import CodeShowcase from './components/CodeShowcase';
 import Terminal from './components/Terminal';
 import Experience from './components/Experience';
 import Education from './components/Education';
@@ -35,9 +34,6 @@ export default function App() {
 
                 {/* Filterable, searchable Projects Grid (Load More button, Metrics metrics modals) */}
                 <Projects />
-
-                {/* Interactive production code snippets & architecture showcase */}
-                <CodeShowcase />
 
                 {/* Interactive developer CLI shell & terminal widget */}
                 <Terminal />
